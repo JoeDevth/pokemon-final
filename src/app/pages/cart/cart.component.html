@@ -1,0 +1,193 @@
+<div class="p-10">
+  <h1 class="p-4 pb-2 text-4xl opacity-60 tracking-wide">Cart</h1>
+  @if(_cart.getCart().length === 0) {
+  <div class="flex flex-col justify-center items-center">
+    <p class="p-4 text-center text-xl">not found cart place add product</p>
+    <button
+      class="bg-blue-400 text-white h-10 text-lg rounded-xl w-64"
+      routerLink="/shop"
+    >
+      go to shop
+    </button>
+  </div>
+  } @else {
+  <div class="flex gap-10">
+    <ul class="list bg-base-100 rounded-xl shadow-md w-full">
+      @for(item of cart; track $index) {
+      <li class="list-row">
+        <div>
+          <img
+            class="size-30 rounded-box"
+            [src]="item.image"
+            [alt]="item.name"
+            width="100"
+          />
+        </div>
+        <div class="grid grid-cols-3 justify-around w-full items-center">
+          <div class="w-full text-center">{{ item.name }}</div>
+          <div class="flex w-fit gap-4 items-center">
+            <div
+              class="border-2 border-gray-200 px-2 py-1 rounded-2xl flex gap-6"
+            >
+              <div class="cursor-pointer" (click)="decrement(item)">
+                <button class="btn btn-square btn-ghost">
+                  <svg
+                    width="10px"
+                    height="10px"
+                    viewBox="0 -8 18 18"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <title>
+                      action / 3 - action, decrease, delete, minus, negative,
+                      remove, subtraction icon
+                    </title>
+                    <g
+                      id="Free-Icons"
+                      stroke="none"
+                      stroke-width="1"
+                      fill="none"
+                      fill-rule="evenodd"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <g
+                        transform="translate(-304.000000, -91.000000)"
+                        id="Group"
+                        stroke="#000000"
+                        stroke-width="2"
+                      >
+                        <g
+                          transform="translate(301.000000, 80.000000)"
+                          id="Shape"
+                        >
+                          <line x1="4" y1="12" x2="20" y2="12"></line>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </button>
+              </div>
+              <div class="mt-2">
+                {{ item.qty }}
+              </div>
+              <div class="cursor-pointer" (click)="increment(item)">
+                <button class="btn btn-square btn-ghost">
+                  <svg
+                    width="10px"
+                    height="10px"
+                    viewBox="0 0 18 18"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <title>
+                      action / 1 - action, add, addition, increase, new, plus,
+                      positive icon
+                    </title>
+                    <g
+                      id="Free-Icons"
+                      stroke="none"
+                      stroke-width="1"
+                      fill="none"
+                      fill-rule="evenodd"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <g
+                        transform="translate(-156.000000, -83.000000)"
+                        id="Group"
+                        stroke="#000000"
+                        stroke-width="2"
+                      >
+                        <g
+                          transform="translate(153.000000, 80.000000)"
+                          id="Shape"
+                        >
+                          <path d="M12,4 L12,20 M20,12 L4,12"></path>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div>$ {{ item.id * 10 }} / per</div>
+          </div>
+          <div class="w-full text-right">$ {{ itemTotalPrice(item) }}</div>
+          <button
+            class="btn btn-square btn-ghost"
+            (click)="removeProduct(item)"
+          >
+            <svg
+              fill="#000000"
+              width="20px"
+              height="20px"
+              viewBox="0 0 56 56"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M 44.5235 48.6602 L 46.1407 14.3945 L 48.4844 14.3945 C 49.4454 14.3945 50.2187 13.5976 50.2187 12.6367 C 50.2187 11.6758 49.4454 10.8555 48.4844 10.8555 L 38.2422 10.8555 L 38.2422 7.3398 C 38.2422 3.9883 35.9688 1.8086 32.3595 1.8086 L 23.5938 1.8086 C 19.9844 1.8086 17.7344 3.9883 17.7344 7.3398 L 17.7344 10.8555 L 7.5391 10.8555 C 6.6016 10.8555 5.7813 11.6758 5.7813 12.6367 C 5.7813 13.5976 6.6016 14.3945 7.5391 14.3945 L 9.8829 14.3945 L 11.5000 48.6836 C 11.6641 52.0586 13.8907 54.1914 17.2657 54.1914 L 38.7579 54.1914 C 42.1095 54.1914 44.3595 52.0351 44.5235 48.6602 Z M 21.4844 7.5742 C 21.4844 6.2383 22.4688 5.3008 23.8751 5.3008 L 32.1016 5.3008 C 33.5313 5.3008 34.5157 6.2383 34.5157 7.5742 L 34.5157 10.8555 L 21.4844 10.8555 Z M 17.6173 50.6758 C 16.2579 50.6758 15.2500 49.6445 15.1797 48.2852 L 13.5391 14.3945 L 42.3907 14.3945 L 40.8438 48.2852 C 40.7735 49.6680 39.7891 50.6758 38.4063 50.6758 Z M 34.9610 46.5508 C 35.7344 46.5508 36.3204 45.9180 36.3438 45.0273 L 37.0469 20.2773 C 37.0704 19.3867 36.4610 18.7305 35.6641 18.7305 C 34.9376 18.7305 34.3282 19.4102 34.3048 20.2539 L 33.6016 45.0273 C 33.5782 45.8711 34.1641 46.5508 34.9610 46.5508 Z M 21.0626 46.5508 C 21.8595 46.5508 22.4454 45.8711 22.4219 45.0273 L 21.7188 20.2539 C 21.6954 19.4102 21.0626 18.7305 20.3360 18.7305 C 19.5391 18.7305 18.9532 19.3867 18.9766 20.2773 L 19.7032 45.0273 C 19.7266 45.9180 20.2891 46.5508 21.0626 46.5508 Z M 29.4298 45.0273 L 29.4298 20.2539 C 29.4298 19.4102 28.7969 18.7305 28.0235 18.7305 C 27.2500 18.7305 26.5938 19.4102 26.5938 20.2539 L 26.5938 45.0273 C 26.5938 45.8711 27.2500 46.5508 28.0235 46.5508 C 28.7735 46.5508 29.4298 45.8711 29.4298 45.0273 Z"
+              />
+            </svg>
+          </button>
+        </div>
+      </li>
+      }
+    </ul>
+    <div class="card bg-base-100 w-96 shadow-sm h-fit">
+      <div class="card-body">
+        <h2 class="card-title text-xl">Order Summary</h2>
+        <div class="flex justify-between items-end">
+          <h1 class="text-2xl">total</h1>
+          <h1 class="text-4xl">$ {{ totalPrice() }}</h1>
+        </div>
+
+        <div class="card-actions mt-10">
+          <button
+            class="btn bg-green-600 w-full text-white"
+            onclick="my_modal_5.showModal()"
+          >
+            Check Out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box justify-center items-center rounded-2xl">
+    <div class="text-center flex justify-center mb-4">
+      <svg
+        width="50px"
+        height="50px"
+        viewBox="0 0 1024 1024"
+        class="icon"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill="#000000"
+          d="M512 64a448 448 0 110 896 448 448 0 010-896zm0 832a384 384 0 000-768 384 384 0 000 768zm48-176a48 48 0 11-96 0 48 48 0 0196 0zm-48-464a32 32 0 0132 32v288a32 32 0 01-64 0V288a32 32 0 0132-32z"
+        />
+      </svg>
+    </div>
+    <h3 class="text-xl font-bold text-center">Confirm checkout bill</h3>
+    <p class="py-4 text-center">are u sure about this action</p>
+    <div class="modal-action w-full justify-center">
+      <form method="dialog">
+        <button class="btn mr-2 rounded-2xl bg-gray-100">Close</button>
+        <button
+          class="btn rounded-2xl bg-yellow-500 text-white"
+          (click)="clearCart()"
+          routerLink="/"
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>

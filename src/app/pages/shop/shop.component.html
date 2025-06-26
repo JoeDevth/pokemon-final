@@ -1,0 +1,29 @@
+<div class="container mx-auto p-10">
+  <div
+    class="grid id grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+  >
+    @for(item of pokemon; track item) {
+    <div
+      class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow rounded-xl cursor-pointer p-4"
+      [routerLink]="['/detail', item.name]"
+    >
+      <figure>
+        <img [src]="item.image" [alt]="item.name" />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title text-2xl">
+          {{ item.name }}
+        </h2>
+        @for(type of item.types; track type.type.name) {
+        <span class="badge badge-primary capitalize rounded-2xl">{{
+          type.type.name
+        }}</span>
+        }
+      </div>
+      <div class="card-actions justify-end">
+        <div class="badge badge-outline rounded-2xl">Watch Detail</div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="flex justify-center p-10 min-h-screen">
+  @if(pokemonDetail) {
+  <div class="hero bg-base-100 w-200 h-140 shadow-sm rounded-2xl">
+    <div class="hero-content flex-col lg:flex-row">
+      <img [src]="pokemonDetail.image" class="max-w-sm" />
+      <div>
+        <div class="flex flex-col gap-4">
+          <h1 class="text-5xl font-bold">{{ pokemonDetail.name }}</h1>
+          @for(type of pokemonDetail.type; track $index){
+          <div class="flex flex-row">
+            <div class="badge badge-primary capitalize rounded-2xl">
+              {{ type }}
+            </div>
+          </div>
+          }
+          <p class="text-xl">{{ pokemonDetail.id * 10 }} coin</p>
+        </div>
+        <div
+          class="card-actions flex flex-row gap-4 justify-end items-end w-full mt-30"
+        >
+          <button
+            class="btn btn-primary rounded-full cursor-pointer"
+            routerLink="/shop"
+            type="button"
+            tabindex="0"
+          >
+            ย้อนกลับ
+          </button>
+          <button
+            class="btn btn-primary rounded-full cursor-pointer"
+            type="button"
+            tabindex="0"
+            (click)="addToCart()"
+          >
+            เพิ่มสินค้า
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  }
+</div>
+
+@if(isOpen) {
+<div class="toast toast-end">
+  <div class="alert alert-success">
+    <span>เพิ่มในตระกล้าแล้ว</span>
+  </div>
+</div>
+}
